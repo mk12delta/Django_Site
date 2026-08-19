@@ -1,0 +1,15 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+    {% if perms.catalog.delete_director %}
+        <h1>Delete Director {{ director.first_name }}</h1>
+        <form method="Post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Delete">
+            <a href="{% url 'director_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    {% else %}
+        You do not have permission to access this feature
+        <a href="{% url 'index' %}">Home</a>
+    {% endif %}
+{% endblock %}

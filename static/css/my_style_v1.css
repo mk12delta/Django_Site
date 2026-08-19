@@ -1,0 +1,125 @@
+/*************************************
+GENERAL
+**************************************/
+
+html {
+    font-size: 16px;
+    font-family: arial, sans-serif;
+	background-color: #4f4f4f;
+}
+
+p,
+li {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    color: #ffffff;
+    line-height: 1.5;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+h1 {
+    color: #ffca2b;
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+h2 {
+    color: #ffca2b;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.home1 {
+    font-family: "Jersey 25", sans-serif;
+    font-weight: 400;
+    font-size: 88px;
+    text-align: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.home2 {
+    color: White;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.subhead {
+    color: White;
+    font-size: 18px;
+    font-weight: normal;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.center {
+    text-align: center;
+}
+
+/*************************************
+DIV ETC
+**************************************/
+
+#wrapper {
+    max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 10%;
+}
+
+.block {
+    display: inline-block;
+    vertical-align: top;
+    border: 10px solid #37698e;
+    background-color: #6c6c6c;
+    width: 250px;
+    height: 285px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.container  {
+    text-align: center;
+}
+
+/*************************************
+IMAGES
+**************************************/
+
+img {
+    max-width: 100%;
+}
+
+.home_icon {
+    display: block;
+    max-height: 150px;
+    max-width: 150px;
+    margin: 15px auto;
+}
+
+.catalog {
+    display: block;
+    max-height: 100px;
+    max-width: 80px;
+    margin: 0 auto 10px;
+}
+
+.profile {
+    display: block;
+    max-width: 150px;
+    margin: 0 auto 10px;
+}
+
+
+/*************************************
+FONTS
+**************************************/
+
+.jersey-25-regular {
+  font-family: "Jersey 25", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

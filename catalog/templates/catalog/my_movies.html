@@ -1,0 +1,58 @@
+{% extends "catalog/base.html" %}
+{% load dict_extras %}
+
+{% block title %}My Movies{% endblock %}
+
+{% block content %}
+<h1>My Movies</h1>
+<p class="text-white-50">Movies you've saved to your favorites list.</p>
+
+{% if favorites %}
+    <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+        {% for fav in favorites %}
+        <div class="col">
+            <div class="card h-100 bg-secondary text-white">
+                {% if fav.movie.movie_image %}
+                    <img src="{{ fav.movie.movie_image.url }}" class="card-img-top" alt="{{ fav.movie.title }} poster" style="max-height: 300px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'movie_detail' fav.movie.pk %}" class="text-white">{{ fav.movie.title }}</a>
+                    </h5>
+                    {% if fav.movie.year_created %}
+                        <p class="card-text text-white-50 mb-1">{{ fav.movie.year_created }}</p>
+                    {% endif %}
+                    {% if fav.movie.directors.all %}
+                        <p class="card-text small">
+                            {{ fav.movie.directors.all|join:", " }}
+                        </p>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-white-50">Added {{ fav.created_at|date:"N j, Y" }}</small>
+                        <form method="post" action="{% url 'remove_favorite' fav.movie.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-light">Remove</button>
+                        </form>
+                    </div>
+                    <div class="mt-2">
+                        {% with review_pk=user_review_map|get_item:fav.movie.pk %}
+                        {% if review_pk %}
+                            <a href="{% url 'edit_review' review_pk %}" class="btn btn-sm btn-outline-warning w-100">&#9998; Edit Your Review</a>
+                        {% else %}
+                            <a href="{% url 'write_review' fav.movie.pk %}" class="btn btn-sm btn-outline-warning w-100">&#9998; Write a Review</a>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-white mt-4">You haven't saved any favorites yet.
+        <a href="{% url 'movie_list' %}">Browse movies</a> to get started.
+    </p>
+{% endif %}
+{% endblock %}

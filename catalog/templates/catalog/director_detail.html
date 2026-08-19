@@ -1,0 +1,42 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+  <p><a class="btn btn-outline-secondary" href="{% url 'director_list' %}">Back to Director List</a></p>
+  <h1>Name: {{ director.first_name }} {{ director.last_name }}</h1>
+    <pre class=tab>
+        Date of Birth:  {{ director.date_of_birth }}  Date of Death:  {{ director.date_of_death }}
+    </pre>
+    <div>
+    {% if director.director_image %}
+        <img alt="Director image" class="card-img-top embed-responsive-item"
+            src="{{ director.director_image.url }}" style="max-width: 200px; height: auto;"/>
+    {% endif %}
+    </div>
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Movies</h4>
+    {% with movies=director.movies.all %}
+    {% if movies %}
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Genres</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for movie in movies %}
+        <tr>
+          <td><a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a></td>
+          <td>{{ movie.year_created|default:"—" }}</td>
+          <td>{{ movie.genres.all|join:", " }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No movies on record for this director.</p>
+    {% endif %}
+    {% endwith %}
+  </div>
+{% endblock %}

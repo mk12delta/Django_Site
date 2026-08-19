@@ -1,0 +1,253 @@
+/*************************************
+GENERAL
+**************************************/
+
+html {
+    font-size: 16px;
+    font-family: arial, sans-serif;
+	background-color: #4f4f4f;
+}
+
+hr {
+    color: white;
+}
+
+p,
+li {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    color: #ffffff;
+    line-height: 1.5;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+h1 {
+    color: #ffca2b;
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+h2, h3, h4 {
+    color: #ffca2b;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.home1 {
+    font-family: "Jersey 25", sans-serif;
+    font-weight: 400;
+    font-size: 88px;
+    text-align: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.home2 {
+    color: White;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.subhead {
+    color: White;
+    font-size: 18px;
+    font-weight: normal;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.recommend-title {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 8px;
+}
+
+/*************************************
+DIV ETC
+**************************************/
+
+#wrapper {
+    max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 10%;
+}
+
+.block {
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 8px;
+    border: 2px solid white;
+    background-color: #6b747c;
+    color: white;
+    width: 250px;
+    height: 285px;
+    padding: 10px;
+    margin: 10px 12px 10px;
+}
+
+.block:hover {
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 8px;
+    border: 2px solid #748087;
+    background-color: #748087;
+    width: 250px;
+    height: 285px;
+    padding: 10px;
+    margin: 10px 12px 10px;
+}
+
+.block:hover h2 {
+    color: #ffca2b;
+}
+
+.recommend-movie {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    background-color: #6b747c;
+    border: 6px solid #6b747c;
+    border-radius: 6px;
+    width: auto;
+    height: auto;
+    margin-right: 26px;
+}
+
+.recommend-movie:hover {
+    background-color: #ffca2b;
+    border: 6px solid #ffca2b;
+}
+
+.recommend-movie:hover .recommend-title {
+    color: #2e2e2e;
+}
+
+.catalog-movie {
+    /*container for movie img, buttons & title*/
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    background: none;
+    border-radius: 6px;
+    float: left;
+    margin-right: 25px;
+    margin-bottom: 36px;
+}
+
+.catalog-movie:hover {
+    background-color: #1f3040;
+    display: inline-block;
+    height: auto;
+    width: auto;
+}
+
+.catalog-title {
+    /*for movie titles*/
+    display: none;
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.catalog-elements {
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.catalog-movie img {
+    transition: opacity .3s ease;
+}
+
+.catalog-movie:hover img {
+    opacity: 10%;
+}
+
+.catalog-movie:hover .catalog-title {
+    display: inline-block;
+}
+
+.criteria input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    width: 0;
+    height: 0;
+    display: inline-block;
+}
+
+.criteria label{
+    display: inline-block;
+    padding: 6px 14px;
+    margin: 4px;
+    border-radius: 24px;
+    border: 2px solid #88979f;
+    color: #bfcfd5;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.criteria input[type="checkbox"]:checked + label{
+    background-color: #ffca2b;
+    color: #2e2e2e;
+    border: 2px solid #ffca2b;
+}
+
+.container  {
+    text-align: center;
+}
+
+/*************************************
+IMAGES
+**************************************/
+
+img {
+    max-width: 100%;
+}
+
+.recommend-img {
+    border-radius: 6px;
+    width: 250px;
+    height: 370px;
+}
+
+.home_icon {
+    display: block;
+    max-height: 150px;
+    max-width: 150px;
+    margin: 15px auto;
+}
+
+.catalog-img {
+    display: block;
+    height: 237px;
+    border-radius: 6px;
+    width: 160px;
+    margin: auto;
+}
+
+.profile {
+    display: block;
+    max-width: 150px;
+    margin: 0 auto 10px;
+}
+
+
+/*************************************
+FONTS
+**************************************/
+
+.jersey-25-regular {
+  font-family: "Jersey 25", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

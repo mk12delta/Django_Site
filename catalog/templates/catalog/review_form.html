@@ -1,0 +1,107 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}{% if editing %}Edit Review{% else %}Write a Review{% endif %}{% endblock %}
+
+{% block extra_head %}
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<style>
+  .star-radio { display: none; }
+  .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 4px; margin-bottom: 1rem; }
+  .star-rating label {
+    font-size: 2rem;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.1s;
+  }
+  .star-rating input:checked ~ label,
+  .star-rating label:hover,
+  .star-rating label:hover ~ label { color: #f5c518; }
+  .ql-toolbar.ql-snow {
+    background: #ffffff;
+    border-radius: 4px 4px 0 0;
+  }
+  .ql-toolbar.ql-snow .ql-stroke { stroke: #000000; }
+  .ql-toolbar.ql-snow .ql-fill { fill: #000000; }
+  .ql-toolbar.ql-snow .ql-picker { color: #000000; }
+  .ql-toolbar.ql-snow button:hover .ql-stroke,
+  .ql-toolbar.ql-snow button.ql-active .ql-stroke { stroke: #0066cc; }
+  .ql-toolbar.ql-snow button:hover .ql-fill,
+  .ql-toolbar.ql-snow button.ql-active .ql-fill { fill: #0066cc; }
+  .ql-container.ql-snow {
+    background: #ffffff;
+    min-height: 200px;
+    border-radius: 0 0 4px 4px;
+    font-size: 1rem;
+  }
+  .ql-editor,
+  .ql-editor p,
+  .ql-editor ol,
+  .ql-editor ul,
+  .ql-editor li,
+  .ql-editor blockquote {
+    color: #000000 !important;
+    background: #ffffff !important;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<p><a class="btn btn-outline-secondary" href="{{ movie.get_absolute_url }}">Back to {{ movie.title }}</a></p>
+
+<h1>{% if editing %}Edit Your Review{% else %}Write a Review{% endif %}</h1>
+<h5 class="text-muted mb-4">{{ movie.title }}{% if movie.year_created %} ({{ movie.year_created }}){% endif %}</h5>
+
+<form method="post" id="review-form">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label class="form-label fw-bold">Rating</label>
+    <div class="star-rating">
+      {% for value, label in form.rating.field.choices reversed %}
+        <input type="radio" class="star-radio" name="rating" id="star{{ value }}" value="{{ value }}"
+          {% if form.rating.value == value|stringformat:"s" %}checked{% endif %}>
+        <label for="star{{ value }}" title="{{ value }} star{{ value|pluralize }}">&#9733;</label>
+      {% endfor %}
+    </div>
+    {% if form.rating.errors %}
+      <div class="text-danger small">{{ form.rating.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label fw-bold">Your Review</label>
+    <div id="quill-editor"></div>
+    {{ form.review_text }}
+    {% if form.review_text.errors %}
+      <div class="text-danger small">{{ form.review_text.errors }}</div>
+    {% endif %}
+  </div>
+
+  <button type="submit" class="btn btn-primary">{% if editing %}Save Changes{% else %}Submit Review{% endif %}</button>
+  <a href="{{ movie.get_absolute_url }}" class="btn btn-outline-secondary ms-2">Cancel</a>
+</form>
+
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script>
+  var quill = new Quill('#quill-editor', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['blockquote'],
+        ['clean']
+      ]
+    }
+  });
+
+  var textarea = document.getElementById('id_review_text');
+  if (textarea.value) {
+    quill.root.innerHTML = textarea.value;
+  }
+
+  document.getElementById('review-form').addEventListener('submit', function () {
+    textarea.value = quill.root.innerHTML;
+  });
+</script>
+{% endblock %}

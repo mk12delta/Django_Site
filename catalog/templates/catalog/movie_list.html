@@ -1,0 +1,118 @@
+{% extends "catalog/base.html" %}
+{% load dict_extras %}
+{% load static %}
+
+{% block content %}
+    <style>
+        .
+    </style>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Movie List</h1>
+        {% if user.is_superuser %}
+            <a href="{% url 'movie_create' %}" class="btn btn-success">Add Movie</a>
+        {% endif %}
+    </div>
+    <hr>
+
+    {% if movie_list %}
+        <div style="text-align: left">
+            {% for movie in movie_list %}
+                <a href="{{ movie.get_absolute_url }}" style="color:white; text-decoration-line: none"><div class="catalog-movie">
+                    {% if movie.movie_image %}
+                    <img alt="Movie image" src="{{ movie.movie_image.url }}" class="catalog-img"/>
+                    {% else %}
+                    <img alt="Blank movie image" src="media/images/catalog_icon_v1.png" class="catalog-img"/>
+                    {% endif %}
+                    <div class="catalog-title">
+                        <div class="catalog-elements">{{ movie.title }}</div>
+                        <div class="catalog-elements">{% if user.is_authenticated %}
+                            {% if movie.pk in favorite_movie_ids %}
+                                <form method="post" action="{% url 'remove_favorite' movie.pk %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="movie_list">
+                                    <button type="submit" class="btn btn-warning btn-sm" style="padding: 6px">&#9733; Saved</button>
+                                </form>
+                            {% else %}
+                                <form method="post" action="{% url 'add_favorite' movie.pk %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="movie_list">
+                                    <button type="submit" class="btn btn-outline-warning btn-sm" style="padding: 6px">&#9733; Favorite</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                        <div class="catalog-elements">
+                            {% if movie.pk in user_review_map %}
+                                <a href="{% url 'edit_review' user_review_map|get_item:movie.pk %}" class="btn btn-outline-light btn-sm" style="padding: 6px">&#9998; Edit Review</a>
+                            {% else %}
+                                <a href="{% url 'write_review' movie.pk %}" class="btn btn-outline-light btn-sm" style="padding: 6px">&#9998; Review</a>
+                            {% endif %}
+                        {% endif %}
+                        </div>
+{#                        <div class="catalog-elements">#}
+{#                            {% if user.is_superuser %}#}
+{#                                <a href="{% url 'movie_update' pk=movie.pk %}" class="btn btn-primary btn-sm">Edit</a>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                        <div class="catalog-elements">#}
+{#                            {% if user.is_superuser %}#}
+{#                                <a href="{% url 'movie_delete' pk=movie.pk %}"#}
+{#                                   onclick="return confirm('Are you sure you want to delete?')"#}
+{#                                   class="btn btn-danger btn-sm">Delete</a>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+                    </div>
+                </div></a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+{#    {% if movie_list %}#}
+{#        <ul class="list-group">#}
+{#            {% for movie in movie_list %}#}
+{#                <li class="list-group-item d-flex justify-content-between align-items-center">#}
+{#                    <span>#}
+{#                        <a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a>#}
+{#                        {% if movie.directors.all %}#}
+{#                            ({{ movie.directors.all|join:", " }})#}
+{#                        {% endif %}#}
+{#                    </span>#}
+{##}
+{#                    <span class="d-flex align-items-center gap-2">#}
+{#                        {% if user.is_authenticated %}#}
+{#                            {% if movie.pk in favorite_movie_ids %}#}
+{#                                <form method="post" action="{% url 'remove_favorite' movie.pk %}">#}
+{#                                    {% csrf_token %}#}
+{#                                    <input type="hidden" name="next" value="movie_list">#}
+{#                                    <button type="submit" class="btn btn-warning btn-sm">&#9733; Saved</button>#}
+{#                                </form>#}
+{#                            {% else %}#}
+{#                                <form method="post" action="{% url 'add_favorite' movie.pk %}">#}
+{#                                    {% csrf_token %}#}
+{#                                    <input type="hidden" name="next" value="movie_list">#}
+{#                                    <button type="submit" class="btn btn-outline-warning btn-sm">&#9733; Favorite</button>#}
+{#                                </form>#}
+{#                            {% endif %}#}
+{##}
+{#                            {% if movie.pk in user_review_map %}#}
+{#                                <a href="{% url 'edit_review' user_review_map|get_item:movie.pk %}" class="btn btn-outline-light btn-sm">&#9998; Edit Review</a>#}
+{#                            {% else %}#}
+{#                                <a href="{% url 'write_review' movie.pk %}" class="btn btn-outline-light btn-sm">&#9998; Review</a>#}
+{#                            {% endif %}#}
+{#                        {% endif %}#}
+{##}
+{#                        {% if user.is_superuser %}#}
+{#                            <a href="{% url 'movie_update' pk=movie.pk %}" class="btn btn-primary btn-sm">Edit</a>#}
+{#                            <a href="{% url 'movie_delete' pk=movie.pk %}"#}
+{#                               onclick="return confirm('Are you sure you want to delete?')"#}
+{#                               class="btn btn-danger btn-sm">Delete</a>#}
+{#                        {% endif %}#}
+{#                    </span>#}
+{#                </li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    {% else %}#}
+{#        <p>There are no movies in the library.</p>#}
+{#    {% endif %}#}
+{% endblock %}

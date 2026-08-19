@@ -1,0 +1,43 @@
+{% extends "catalog/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if results %}
+        <div style="text-align: left">
+            {% if results %}
+                <h1>Here's what we recommend:</h1>
+                <hr>
+                {% for result in results %}
+                    <a href="{{ result.get_absolute_url }}"><div class="recommend-movie">
+                        <img alt="Movie image" src="{{ result.movie_image.url }}" class="recommend-img"/>
+                        <p class="recommend-title">{{ result.title }}</p>
+                    </div></a>
+                {% endfor %}
+{#                <h2>Other results you might like:</h2>#}
+{#                <hr>#}
+                <br/><br/><br/><br/>
+            {% endif %}
+        </div>
+    {% else %}
+        <div style="text-align: left">
+            <h1>Let's pick out a movie!</h1>
+            <hr>
+            <form style="color:white" method="get">
+                {% csrf_token %}
+                {% for field in form %}
+                    <p>{{ field.label }}</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                        {% for option in field %}
+                            <div class="criteria">
+                                {{ option.tag }}
+                                <label for="{{ option.id_for_label }}">{{ option.choice_label }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <br/><br/>
+                {% endfor %}
+                <input type="submit" value="Submit" class="btn btn-light">
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

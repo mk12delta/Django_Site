@@ -1,0 +1,33 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <p style="text-align: center"><strong>Welcome to</strong></p>
+    <h1 class="home1">BlokBustr</h1>
+    <style>
+        a {
+            color: White;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #ffca2b;
+            text-decoration: underline;
+        }
+    </style>
+
+    <br/><br/>
+
+    <div id="wrapper">
+        <a href="{% url 'recommend_movie' %}"><div class="block">
+            <img class="home_icon" src="media/images/recommend_icon_v1.png" alt="error"/>
+            <h2 class="home2">Find a movie to watch</h2>
+        </div></a>
+        <a href="{% url 'movie_list' %}"><div class="block">
+            <img class="home_icon" src="media/images/catalog_icon_v1.png" alt="error"/>
+            <h2 class="home2">Browse catalog</h2>
+        </div></a>
+        <a href="{% url 'my_movies' %}"><div class="block">
+            <img class="home_icon" src="media/images/favorites_icon_v1.png" alt="error"/>
+            <h2 class="home2">View favorites</h2>
+        </div></a>
+    </div>
+{% endblock %}
